@@ -1,0 +1,75 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import blogData from "../../data.js";
+import { URLify } from "../../utils.js";
+export const getStaticPaths = (() => {
+  return blogData.map((data) => {
+    return {
+      params: {
+        slug: URLify(data.title),
+      },
+      props: {
+        data,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const { data } = Astro.props;
+---
+
+<Layout title={data.title}>
+  <Header />
+  <main>
+    <div class="blog-container">
+      <a class="back" href="/">Back</a>
+      <div class="img-wrap">
+        <img src={data.imgURL} alt="" class="blog-thumb" />
+      </div>
+      <h1 transition:name={"blog-title-" + slug} transition:animate="fade">
+        {data.title}
+      </h1>
+      <p>{data.content}</p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  a.back {
+    display: block;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: black;
+  }
+
+  a.back::before {
+    display: inline;
+    content: "← ";
+  }
+  .blog-container {
+    padding-top: 3rem;
+    max-width: 40rem;
+    padding-inline: 2rem;
+    margin: auto;
+  }
+  .blog-thumb {
+    width: 100%;
+    object-fit: cover;
+  }
+  p {
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .img-wrap {
+    overflow: hidden;
+  }
+
+  .img-wrap img {
+    transition: 0.1s ease-in-out;
+    height: 20rem;
+  }
+</style>

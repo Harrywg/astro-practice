@@ -1,0 +1,21 @@
+---
+const urlRes = await fetch("https://picsum.photos/1000/1000");
+const url = urlRes.url;
+---
+
+<header>
+  <div class="container">
+    <a href="/" class="logo">Test Astro Project</a>
+  </div>
+</header>
+<style>
+  .logo {
+    font-size: 2rem;
+    font-family: monospace;
+    text-decoration: none;
+    color: black;
+  }
+  header {
+    padding-block: 1rem;
+  }
+</style>

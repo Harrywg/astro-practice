@@ -1,0 +1,70 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Header from "../components/Header.astro";
+import { genImg, URLify } from "../utils.ts";
+import blogData from "../data.js";
+---
+
+<Layout title="Test Project">
+  <Header />
+  <main>
+    <div class="container">
+      <div class="blog-wrap">
+        {
+          blogData.map((data, i) => {
+            return (
+              <a class="blog-card" href={`/blog/${URLify(data.title)}`}>
+                <div class="img-wrap">
+                  <img src={data.imgURL} alt="" />
+                </div>
+                <h2 transition:name={"blog-title-" + URLify(data.title)}>
+                  {data.title}
+                </h2>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .blog-wrap {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .blog-card img {
+    width: 100%;
+  }
+
+  .img-wrap {
+    width: 300px;
+    overflow: hidden;
+    line-height: 0px;
+  }
+
+  a.blog-card img {
+    transition: 0.1s ease-in-out;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  a.blog-card:hover img {
+    transform: scale(1.1);
+  }
+
+  a.blog-card {
+    text-decoration: none;
+  }
+  a.blog-card:hover {
+    text-decoration: underline;
+  }
+  a.blog-card h2 {
+    font-weight: 400;
+    font-size: 1.5rem;
+  }
+</style>

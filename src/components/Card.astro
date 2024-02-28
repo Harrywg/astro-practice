@@ -1,0 +1,30 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  href: string;
+}
+
+const { href, title, body } = Astro.props;
+
+const urlRes = await fetch("https://picsum.photos/1000/1000");
+const url = urlRes.url;
+---
+
+<li class="link-card">
+  <img src={url} alt="" />
+  <a href={href}>
+    <h2>
+      {title}
+      <span>&rarr;</span>
+    </h2>
+    <p>
+      {body}
+    </p>
+  </a>
+</li>
+<style>
+  img {
+    width: 10rem;
+  }
+</style>
